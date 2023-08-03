@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Logo from "../../images/logo/logo.svg";
 import NavList from "../Nav/NavList";
 import {Link} from "react-router-dom";
@@ -9,8 +9,32 @@ import SideImg3 from "../../images/sidebar/3.jpg";
 import SideImg4 from "../../images/sidebar/4.jpg";
 import SideImg5 from "../../images/sidebar/5.jpg";
 import SideImg6 from "../../images/sidebar/6.jpg";
+import AuthService from "../../Pages/Schedule/AuthContext";
 
 function Navbar() {
+    const [user, setUser] = useState(null);
+    const [showUserSection, setShowUserSection] = useState(false);
+
+    useEffect(() => {
+        const currentUser = AuthService.getCurrentUser();
+        if (currentUser) {
+            console.log(currentUser)
+            setUser(currentUser);
+            setShowUserSection(true); // Set showUserSection to true when user is logged in
+        } else {
+            setShowUserSection(false); // Set showUserSection to false when user is logged out
+        }
+    }, []);
+
+    // ... (other code)
+
+    const handleLogout = () => {
+        AuthService.logout();
+        setUser(null);
+        setShowUserSection(false); // Set showUserSection to false when user logs out
+    };
+
+
     const [spin, setSpin] = useState(false);
     const [sticky, setSticky] = useState(false);
     const [sidebar, setSideBar] = useState(false);
@@ -31,6 +55,9 @@ function Navbar() {
         } else {
             setSticky(false);
         }
+    };
+    const handleUserIconClick = () => {
+        setShowUserSection(!showUserSection);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -265,9 +292,38 @@ function Navbar() {
                             className="fa-bars fa-solid hidden text-white text-4xl cursor-pointer hover:text-[#FF0336] ease-in duration-200"
                         ></i>
                         {/* account */}
-                        <Link onClick={goTop} to="/signup" title="signup_button">
+                        <Link to="/signup" title="signup_button" onClick={handleUserIconClick}>
                             <i className="fa-regular fa-user  text-white text-4xl cursor-pointer hover:text-[#FF0336] ease-in duration-200"></i>
                         </Link>
+                        {showUserSection && user ? ( // Check if showUserSection is true and user is logged in
+                            <div className="flex items-center gap-4">
+                                <span className="text-white text-lg font-medium" style={{fontSize: "16px"}}>
+                            Xin chào, {user.username}
+                            </span>
+                                <button
+                                    className="text-white text-lg font-medium hover:text-[#FF0336] cursor-pointer"
+                                    onClick={handleLogout}
+                                    style={{fontSize: "16px"}}
+                                >
+                                    Đăng xuất
+                                </button>
+                            </div>
+                        ) : (
+
+                            <div className="flex items-center gap-4">
+                                <Link to="/login">
+                                    <button className="text-white text-lg font-medium hover:text-[#FF0336] cursor-pointer" style={{fontSize: "16px"}}>
+                                        Đăng nhập
+                                    </button>
+                                </Link>
+                                <Link to="/signup">
+                                    <button className="text-white text-lg font-medium hover:text-[#FF0336] cursor-pointer" style={{fontSize: "16px"}}>
+                                        Đăng ký
+                                    </button>
+                                </Link>
+                            </div>
+                        )}
+
                         {/* sidebar */}
                         <i
                             onClick={sideBar}

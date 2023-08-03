@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Nav/Navbar";
 
 function Saturday() {
   return (
     <>
+      <Navbar />
       {/* fiter buttons */}
       <div className="flex flex-wrap gap-4 justify-center">
         <Link

@@ -1,9 +1,26 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import ClassesBox from "../components/ClassesBox/ClassesBox";
 import Footer from "../components/Footer/Footer";
+import Navbar from "../components/Nav/Navbar";
+import axios from "axios";
 
 function Classes() {
+  const [classes, setClasses] = useState([]);
   const [load, setLoad] = useState(true);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/auth/class");
+      setClasses(response.data);
+    } catch (error) {
+      console.error("Error fetching classes:", error);
+    }
+  };
 
   const loadMore = () => {
     setLoad(!load);
@@ -17,163 +34,123 @@ function Classes() {
   };
 
   return (
-    <>
-      <section className="login-section text-center ">
-        <div className="login-banner relative justify-center flex">
-          <h1 className="text-white absolute bottom-[25px] text-[3rem] font-bold">
-            Classes
-          </h1>
-        </div>
+      <>
+        <Navbar />
+        <section className="login-section text-center ">
+          <div className="login-banner relative justify-center flex">
+            <h1 className="text-white absolute bottom-[25px] text-[3rem] font-bold">
+              Lớp Học
+            </h1>
+          </div>
 
-        {/* boxes 1*/}
-        <div
-          className={`container gap-12 page-padding py-[10rem] md1000:grid-cols-2 min620:grid-cols-1  grid-cols-3 grid-rows-3 text-left ${
-            load ? "grid" : "hidden"
-          }`}
-        >
-          <ClassesBox
-            bgImg="cycling-bg"
-            title="Cycling"
-            trainer="Dorian Yate"
-            date="Wed: 9:00 am"
-          />
-          <ClassesBox
-            bgImg="meditaion-bg"
-            title="Meditation"
-            trainer="Maria Mich"
-            date="Fri: 1:00 pm"
-          />
-          <ClassesBox
-            bgImg="mma-bg"
-            title="Boxing"
-            trainer="John Flex"
-            date="Tue: 4:00 pm"
-          />
-          <ClassesBox
-            bgImg="karate-bg"
-            title="Karate"
-            trainer="David Rich"
-            date="Sat: 9:00 am"
-          />
-          <ClassesBox
-            bgImg="powerlift-bg"
-            title="Power Lifting"
-            trainer="Larry Wheels"
-            date="Mon: 8:00 pm"
-          />
-          <ClassesBox
-            bgImg="workout-bg"
-            title="Workout"
-            trainer="Shawn Ray"
-            date="Sun: 10:00 am"
-          />
-          <ClassesBox
-            bgImg="crossfit-bg"
-            title="Crossfit"
-            trainer="Jenifer Alex"
-            date="Wen: 9:00 pm"
-          />
-          <ClassesBox
-            bgImg="running-bg"
-            title="Running"
-            trainer="Zinia Zessy"
-            date="Fri: 6:00 am"
-          />
-        </div>
+          {/* Khối hộp 1 */}
+          <div
+              className={`container gap-12 page-padding py-[10rem] md1000:grid-cols-2 min620:grid-cols-1  grid-cols-3 grid-rows-3 text-left ${
+                  load ? "grid" : "hidden"
+              }`}
+          >
+            {classes.map((cls) => (
+                <ClassesBox
+                    key={cls.id}
+                    bgImg={cls.image} // Replace "default-image" with a default image URL or class name
+                    title={cls.name}
+                    trainer={cls.trainer}
+                    date={`${cls.dayOfWeek}: ${cls.startTime} - ${cls.endTime}`}
+                />
+            ))}
+          </div>
+          <div
+              className={`container gap-12 page-padding py-[10rem] grid-cols-3 md1000:grid-cols-2 min620:grid-cols-1  grid-rows-3 text-left  ${
+                  load ? "hidden" : "grid"
+              }`}
+          >
+            <ClassesBox
+                bgImg="cycling-bg"
+                title="Xe Đạp"
+                trainer="Dorian Yate"
+                date="Thứ Tư: 9:00 sáng"
+            />
+            <ClassesBox
+                bgImg="meditaion-bg"
+                title="Thiền"
+                trainer="Maria Mich"
+                date="Thứ Sáu: 1:00 chiều"
+            />
+            <ClassesBox
+                bgImg="mma-bg"
+                title="Đấm Bốc"
+                trainer="John Flex"
+                date="Thứ Ba: 4:00 chiều"
+            />
+            <ClassesBox
+                bgImg="karate-bg"
+                title="Karate"
+                trainer="David Rich"
+                date="Thứ Bảy: 9:00 sáng"
+            />
+            <ClassesBox
+                bgImg="powerlift-bg"
+                title="Power Lifting"
+                trainer="Larry Wheels"
+                date="Thứ Hai: 8:00 tối"
+            />
+            <ClassesBox
+                bgImg="workout-bg"
+                title="Tập Gym"
+                trainer="Shawn Ray"
+                date="Chủ Nhật: 10:00 sáng"
+            />
+            <ClassesBox
+                bgImg="crossfit-bg"
+                title="Crossfit"
+                trainer="Jenifer Alex"
+                date="Thứ Tư: 9:00 tối"
+            />
+            <ClassesBox
+                bgImg="running-bg"
+                title="Chạy Bộ"
+                trainer="Zinia Zessy"
+                date="Thứ Năm: 12:00 đêm"
+            />
+            <ClassesBox
+                bgImg="bodybuilding-bg"
+                title="Xây Dựng Cơ Bắp"
+                trainer="Jake Paul"
+                date="Thứ Hai: 8:00 tối"
+            />
+            <ClassesBox
+                bgImg="box-bg"
+                title="Môn Mma"
+                trainer="Becky Lynch"
+                date="Thứ Sáu: 6:00 sáng"
+            />
+            <ClassesBox
+                bgImg="yoga-bg"
+                title="Yoga"
+                trainer="Marta Mich"
+                date="Thứ Tư: 8:00 sáng"
+            />
+            <ClassesBox
+                bgImg="fitness-bg"
+                title="Thể Lực"
+                trainer="Mia Malkova"
+                date="Chủ Nhật: 5:00 chiều"
+            />
+          </div>
 
-        {/* boxes 2*/}
-        <div
-          className={`container gap-12 page-padding py-[10rem] grid-cols-3 md1000:grid-cols-2 min620:grid-cols-1  grid-rows-3 text-left  ${
-            load ? "hidden" : "grid"
-          }`}
-        >
-          <ClassesBox
-            bgImg="cycling-bg"
-            title="Cycling"
-            trainer="Dorian Yate"
-            date="Wed: 9:00 am"
-          />
-          <ClassesBox
-            bgImg="meditaion-bg"
-            title="Meditation"
-            trainer="Maria Mich"
-            date="Fri: 1:00 pm"
-          />
-          <ClassesBox
-            bgImg="mma-bg"
-            title="Boxing"
-            trainer="John Flex"
-            date="Tue: 4:00 pm"
-          />
-          <ClassesBox
-            bgImg="karate-bg"
-            title="Karate"
-            trainer="David Rich"
-            date="Sat: 9:00 am"
-          />
-          <ClassesBox
-            bgImg="powerlift-bg"
-            title="Power Lifting"
-            trainer="Larry Wheels"
-            date="Mon: 8:00 pm"
-          />
-          <ClassesBox
-            bgImg="workout-bg"
-            title="Workout"
-            trainer="Shawn Ray"
-            date="Sun: 10:00 am"
-          />
-          <ClassesBox
-            bgImg="crossfit-bg"
-            title="Crossfit"
-            trainer="Jenifer Alex"
-            date="Wen: 9:00 pm"
-          />
-          <ClassesBox
-            bgImg="running-bg"
-            title="Running"
-            trainer="Zinia Zessy"
-            date="Thu: 12:00 am"
-          />
-          <ClassesBox
-            bgImg="bodybuilding-bg"
-            title="Body Building"
-            trainer="Jake Paul"
-            date="Mon: 8:00 pm"
-          />
-          <ClassesBox
-            bgImg="box-bg"
-            title="Mma"
-            trainer="Becky Lynch"
-            date="Fri: 6:00 am"
-          />
-          <ClassesBox
-            bgImg="yoga-bg"
-            title="Yoga"
-            trainer="Marta Mich"
-            date="Wen: 8:00 am"
-          />
-          <ClassesBox
-            bgImg="fitness-bg"
-            title="Fitness"
-            trainer="Mia Malkova"
-            date="Sun: 5:00 pm"
-          />
-        </div>
+          <button
+              className="text-[1.5rem] text-white bg-slate-600 px-14 py-6 font-medium uppercase shadow-2xl mb-14"
+              onClick={() => {
+                loadMore();
+                goTop();
+              }}
+          >
+            {load ? "xem thêm" : "rút gọn"}
+          </button>
 
-        <button
-          className="text-[1.5rem] text-white bg-slate-600 px-14 py-6 font-medium uppercase shadow-2xl mb-14"
-          onClick={() => {
-            loadMore();
-            goTop();
-          }}
-        >
-          {load ? "show more" : "show less"}
-        </button>
-
-        <Footer />
-      </section>
-    </>
+          <Footer />
+        </section>
+      </>
   );
 }
 

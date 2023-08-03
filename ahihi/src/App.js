@@ -5,7 +5,6 @@ import SignUp from "./Pages/SignUp";
 import Navbar from "./components/Nav/Navbar";
 
 import { Route, Routes } from "react-router-dom";
-import { AuthContextProvider } from "./context/AuthContext";
 import Classes from "./Pages/Classes";
 import Price from "./Pages/Price";
 import Blog from "./Pages/Blog";
@@ -21,12 +20,13 @@ import Gallery from "./Pages/Gallery/Gallery";
 import GalleryPage1 from "./Pages/Gallery/GalleryPage1";
 import GalleryPage2 from "./Pages/Gallery/GalleryPage2";
 import About from "./Pages/About";
+// import {AuthProvider} from "./Pages/Schedule/AuthContext";
 
 function App() {
   return (
     <>
-      <AuthContextProvider>
-        <Navbar />
+      {/*<AuthProvider>*/}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="contact" element={<Contact />} />
@@ -36,7 +36,6 @@ function App() {
           <Route path="pricing" element={<Price />} />
           <Route path="blog" element={<Blog />} />
           <Route path="about" element={<About />} />
-
           <Route path="schedule" element={<Schedule />}>
             <Route path="monday" element={<Monday />} />
             <Route path="tuesday" element={<Tuesday />} />
@@ -46,13 +45,12 @@ function App() {
             <Route path="saturday" element={<Saturday />} />
             <Route path="sunday" element={<Sunday />} />
           </Route>
-
           <Route path="gallery" element={<Gallery />}>
             <Route path="page-1" element={<GalleryPage1 />} />
             <Route path="page-2" element={<GalleryPage2 />} />
           </Route>
         </Routes>
-      </AuthContextProvider>
+      {/*</AuthProvider>*/}
     </>
   );
 }

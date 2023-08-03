@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Nav/Navbar";
 
 function Wednesday() {
   return (
       <>
+        <Navbar />
         {/* Các nút lọc */}
         <div className="flex flex-wrap gap-4 justify-center">
           <Link

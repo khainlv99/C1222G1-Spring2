@@ -1,0 +1,92 @@
+CREATE DATABASE gym_management;
+USE gym_management;
+
+-- Tạo bảng nhân viên
+CREATE TABLE Employees (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Name VARCHAR(50) NOT NULL,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  UserID INT,
+  FOREIGN KEY (UserID) REFERENCES Users(ID) ON DELETE CASCADE
+);
+
+-- Tạo bảng khách hàng
+CREATE TABLE Customers (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Name VARCHAR(50) NOT NULL,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  UserID INT,
+  FOREIGN KEY (UserID) REFERENCES Users(ID) ON DELETE CASCADE
+);
+
+-- Tạo bảng admin
+CREATE TABLE Admins (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Name VARCHAR(50) NOT NULL,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  UserID INT,
+  FOREIGN KEY (UserID) REFERENCES Users(ID) ON DELETE CASCADE
+);
+
+-- Tạo bảng gói tập
+CREATE TABLE Packages (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Name VARCHAR(50) NOT NULL,
+  Description TEXT
+);
+
+-- Tạo bảng lớp tập
+CREATE TABLE Classes (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Name VARCHAR(50) NOT NULL,
+  Schedule VARCHAR(100)
+);
+
+-- Tạo bảng Users
+CREATE TABLE Users (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Username VARCHAR(50) NOT NULL,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  Password VARCHAR(100) NOT NULL,
+  Role VARCHAR(50) NOT NULL
+);
+
+-- Tạo bảng phân quyền người dùng
+CREATE TABLE UserRoles (
+  UserID INT,
+  Role VARCHAR(50),
+  PRIMARY KEY (UserID, Role),
+  FOREIGN KEY (UserID) REFERENCES Users(ID) ON DELETE CASCADE,
+  FOREIGN KEY (UserID) REFERENCES Customers(UserID) ON DELETE CASCADE,
+  FOREIGN KEY (UserID) REFERENCES Employees(UserID) ON DELETE CASCADE,
+  FOREIGN KEY (UserID) REFERENCES Admins(UserID) ON DELETE CASCADE
+);
+
+-- Tạo bảng blog
+CREATE TABLE Blogs (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Title VARCHAR(100) NOT NULL,
+  Content TEXT,
+  AuthorID INT,
+  FOREIGN KEY (AuthorID) REFERENCES UserRoles(UserID) ON DELETE CASCADE
+);
+
+-- Tạo bảng đăng ký gói tập
+CREATE TABLE Registrations (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  CustomerID INT,
+  PackageID INT,
+  RegistrationDate DATE,
+  FOREIGN KEY (CustomerID) REFERENCES Customers(ID) ON DELETE CASCADE,
+  FOREIGN KEY (PackageID) REFERENCES Packages(ID) ON DELETE CASCADE
+);
+
+-- Tạo bảng đăng ký khóa học (Enrollments)
+CREATE TABLE Enrollments (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  CustomerID INT,
+  ClassID INT,
+  EnrollmentDate DATE,
+  FOREIGN KEY (CustomerID) REFERENCES Customers(ID) ON DELETE CASCADE,
+  FOREIGN KEY (ClassID) REFERENCES Classes(ID) ON DELETE CASCADE
+);

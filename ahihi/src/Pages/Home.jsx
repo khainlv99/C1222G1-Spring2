@@ -1,4 +1,4 @@
-import About from "../components/About/About";
+    import About from "../components/About/About";
 import BmiCalc from "../components/BMI/BmiCalc";
 import Blog from "../components/Blog/Blog";
 import ChooseUs from "../components/ChooseUs/ChooseUs";
@@ -10,10 +10,12 @@ import Hero from "../components/Hero/Hero";
 import Pricing from "../components/Pricing/Pricing";
 import Testimonials from "../components/Testimonials/Testimonials";
 import Trainers from "../components/Trainers/Trainers";
+    import Navbar from "../components/Nav/Navbar";
 
 function Home() {
   return (
     <>
+        <Navbar />
       <Hero />
       <About />
       <Featured />

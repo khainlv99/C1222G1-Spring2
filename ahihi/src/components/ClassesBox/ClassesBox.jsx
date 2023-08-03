@@ -1,6 +1,7 @@
 import MainButton from "../MainButton";
 
 function ClassesBox({ bgImg, title, trainer, date }) {
+
   return (
     <>
       <div
@@ -25,7 +26,7 @@ function ClassesBox({ bgImg, title, trainer, date }) {
           <MainButton
             color={`text-black`}
             bg={`bg-white`}
-            text="join now"
+            text="Tham gia ngay"
             goTo="/contact"
           />
         </div>

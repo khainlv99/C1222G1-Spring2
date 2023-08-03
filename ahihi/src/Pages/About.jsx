@@ -9,10 +9,12 @@ import Img3 from "../images/AboutPage/3.jpg";
 import Img4 from "../images/AboutPage/4.jpg";
 import Target from "../images/AboutPage/target.png";
 import Mountain from "../images/AboutPage/mountain.png";
+import Navbar from "../components/Nav/Navbar";
 
 function About() {
   return (
       <>
+        <Navbar />
         <section className="login-section">
           <div className="login-banner relative justify-center flex">
             <h1 className="text-white absolute bottom-[25px] text-[3rem] font-bold">

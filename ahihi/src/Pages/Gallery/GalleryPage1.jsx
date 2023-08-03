@@ -1,11 +1,13 @@
 import React from "react";
 import { galleryImg } from "./GalleryFiles";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Nav/Navbar";
 
 function GalleryPage1() {
   const firstPageImgs = galleryImg.filter((item) => item.id <= 8);
   return (
     <>
+        <Navbar/>
       <div className="grid grid-cols-3 gap-7 md1000:grid-cols-2 min540:grid-cols-1">
         {firstPageImgs.map((image) => (
           <div key={image.id}>
