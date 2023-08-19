@@ -6,6 +6,8 @@ import PricingBox from "./PricingBox";
 import Img1 from "../../images/pricing/img1.jpg";
 import Img2 from "../../images/pricing/img2.jpg";
 import Img3 from "../../images/pricing/img3.jpg";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 function Pricing() {
   return (
@@ -35,8 +37,6 @@ function Pricing() {
             {/* pricing boxes */}
             <div className="flex gap-10 mt-32 relative z-[2] md1000:flex-col md1000:items-center ">
               <PricingBox img={Img1} price="1" />
-              <PricingBox img={Img2} price="10" />
-              <PricingBox img={Img3} price="12" />
             </div>
             <img
                 src={BgDumbell}

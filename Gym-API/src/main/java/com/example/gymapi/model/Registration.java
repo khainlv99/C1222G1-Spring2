@@ -16,7 +16,7 @@ public class Registration {
 
     @ManyToOne
     @JoinColumn(name = "PackageID")
-    private Package gymPackage;
+    private PackageEntity gymPackageEntity;
 
     private Date registrationDate;
 

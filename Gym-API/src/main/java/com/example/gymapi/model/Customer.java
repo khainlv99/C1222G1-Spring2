@@ -1,12 +1,14 @@
 package com.example.gymapi.model;
 
 import javax.persistence.*;
+import javax.xml.soap.Name;
 
 @Entity
 @Table(name = "customers")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
     private int id;
 
     private String name;
@@ -26,6 +28,9 @@ public class Customer {
         this.name = name;
         this.email = email;
         this.user = user;
+    }
+    public Customer(Integer customerId) {
+        this.id= (customerId != null) ? customerId : -1;
     }
 
     public int getId() {

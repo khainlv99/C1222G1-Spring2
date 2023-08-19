@@ -4,7 +4,7 @@ import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Navbar from "./components/Nav/Navbar";
 
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Classes from "./Pages/Classes";
 import Price from "./Pages/Price";
 import Blog from "./Pages/Blog";
@@ -20,14 +20,33 @@ import Gallery from "./Pages/Gallery/Gallery";
 import GalleryPage1 from "./Pages/Gallery/GalleryPage1";
 import GalleryPage2 from "./Pages/Gallery/GalleryPage2";
 import About from "./Pages/About";
-// import {AuthProvider} from "./Pages/Schedule/AuthContext";
+import {useEffect} from "react";
+import AuthService from "../src/Pages/Schedule/AuthContext";
+import NotFound from "./components/404/NotFound";
+import {ToastContainer} from "react-toastify";
+import ClassDetails from "./Pages/ClassDetails";
+import CartPage from "./Pages/CartPage";
+import Oder from "./Pages/Oder";
 
 function App() {
+  const location = useLocation();
+  const user = AuthService.getCurrentUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname === '/login' && user) {
+      navigate('/404');
+    }
+  }, [navigate, location.pathname, user]);
   return (
     <>
       {/*<AuthProvider>*/}
-
+      <ToastContainer />
         <Routes>
+          <Route path="/classes/:name" element={<ClassDetails />} />
+          <Route path="/cart" element={<CartPage/>}/>
+          <Route path="404" element={<NotFound/>}/>
+          <Route path="/oder" element={<Oder/>}/>
           <Route path="/" element={<Home />} />
           <Route path="contact" element={<Contact />} />
           <Route path="login" element={<Login />} />
@@ -50,7 +69,7 @@ function App() {
             <Route path="page-2" element={<GalleryPage2 />} />
           </Route>
         </Routes>
-      {/*</AuthProvider>*/}
+
     </>
   );
 }

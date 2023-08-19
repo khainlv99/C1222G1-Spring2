@@ -1,11 +1,16 @@
 import MainButton from "../MainButton";
 
 function ClassesBox({ bgImg, title, trainer, date }) {
+  const imageUrl = bgImg.replace("http://localhost:8080/api/images/", "");
 
+  const boxStyle = {
+    backgroundImage: `url("https://tophinhanhdep.com/wp-content/uploads/2021/11/Gym-Desktop-Wallpapers.jpg")`,
+  };
   return (
     <>
       <div
-        className={`${bgImg} rounded-3xl shadow-2xl flex flex-col h-[46rem] relative p-[40px]`}
+        className={`rounded-3xl shadow-2xl flex flex-col h-[46rem] relative p-[40px]`}
+        style={boxStyle}
       >
         <span className="bg-[#0000004a] rounded-3xl w-full h-full absolute top-0 left-0"></span>
 

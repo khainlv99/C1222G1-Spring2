@@ -1,28 +1,41 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import AuthService from "../Pages/Schedule/AuthContext";
-import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Nav/Navbar";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AuthService from '../Pages/Schedule/AuthContext';
+import Footer from '../components/Footer/Footer';
+import Navbar from '../components/Nav/Navbar';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await AuthService.login(username, password); // Call the login function from AuthService
-      navigate("/"); // Replace with the path to your dashboard/home page
+      await AuthService.login(username, password);
+      navigate('/');
+      toast.success('Đăng nhập thành công!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     } catch (error) {
       console.log(error);
+      toast.error('Đăng nhập thất bại. Vui lòng kiểm tra thông tin đăng nhập!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
+
 
 
   return (
       <>
         <Navbar />
         <section className="login-section">
+          <ToastContainer />
           <div className="login-banner relative justify-center flex">
             <h1 className="text-white absolute bottom-[25px] text-[3rem] font-bold">
               Đăng nhập

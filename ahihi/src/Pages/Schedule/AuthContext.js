@@ -33,6 +33,9 @@ class AuthService {
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
     }
+    getOrderHistory(customerId) {
+        return axios.get(`${API_URL}order/${customerId}`);
+    }
 }
 
 export default new AuthService();
